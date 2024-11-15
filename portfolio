@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aditya Sharma - Game Design Portfolio</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@2.31.0/dist/full.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+
+    <style>
+        body {
+            font-family: 'Press Start 2P', cursive;
+            background-color: #1a1a1a;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            background-color: rgba(20, 20, 20, 0.9);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-link {
+            color: #e0e0e0;
+            text-decoration: none;
+        }
+
+        .nav-link:hover {
+            color: #d946ef;
+        }
+
+        .hero-section {
+            background: linear-gradient(to right, #f09436, #e6683c, #dc2743, #cc2366, #bc1888);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100vh;
+            color: #fff;
+            position: relative;
+            /* Ensure hero section covers the viewport */
+            width: 100%;
+        }
+
+        .hero-section video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            /* Place video behind content */
+        }
+
+        .sarcastic-header {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #d946ef;
+            text-shadow: 2px 2px 4px #000;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            cursor: pointer;
+            z-index: 1;
+            /* Ensure text is above the video */
+        }
+
+        .sarcastic-footer {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #f0f0f0;
+            margin-bottom: 2rem;
+            z-index: 1;
+            /* Ensure text is above the video */
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        section {
+            padding: 5rem 0;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #eaeaea;
+        }
+
+        .bg-gradient-animated {
+            background: linear-gradient(45deg, #f09436, #e6683c, #dc2743, #cc2366, #bc1888);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .glassmorphic-card {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 1rem;
+            padding: 2rem;
+        }
+
+        .scroll-animated {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .scroll-animated.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .retro-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .retro-button:hover {
+            background-color: #0056b3;
+        }
+
+        .game-text {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.5rem;
+            color: #f0f0f0;
+            text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        #about h2 {
+            animation: flash 1s infinite alternate;
+        }
+
+        @keyframes flash {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        #canvasContainer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav-bar">
+        <ul class="nav-links">
+            <li>
+                <a href="#about" class="nav-link">About</a>
+            </li>
+            <li>
+                <a href="#education" class="nav-link">Education</a>
+            </li>
+            <li>
+                <a href="#achievements" class="nav-link">Achievements</a>
+            </li>
+            <li>
+                <a href="#blogs" class="nav-link">Blogs</a>
+            </li>
+            <li>
+                <a href="#projects" class="nav-link">Projects</a>
+            </li>
+            <li>
+                <a href="#contact" class="nav-link">Contact</a>
+            </li>
+        </ul>
+    </nav>
+
+    <section class="hero-section bg-center bg-cover h-screen flex items-center justify-center relative"
+        style="background-image: url('C:\Users\coola\Downloads\3194277-hd_1920_1080_30fps'); background-size: cover; background-position: center;">
+        <a href="#about">
+            <div class="text-white text-center z-10">
+                <h1 class="sarcastic-header">My Portfolio, My Rules!</h1>
+                <p class="sarcastic-footer">so no complaints, just sit-back and enjoy!</p>
+            </div>
+        </a>
+        <div id="canvasContainer">
+            <canvas id="confetti-canvas"></canvas>
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-50"></div>
+
+        <!-- Background Video -->
+        <video autoplay muted loop id="myVideo">
+            <source src="C:\Users\coola\Downloads\Pexels Videos 1171969.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+        </video>
+    </section>
+
+    <main class="main-container">
+        <section id="about" class="py-16 text-white" style="background-color: #f09436;">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold mb-4">About Me</h2>
+
+                <h3 class="text-2xl font-bold mb-4">Background</h3>
+                <p>Hello! I’m Aditya Sharma, a 17-year-old visionary hailing from the bustling city of Delhi, India.
+                    Currently,
+                    I am in my transformative 12th-grade journey at Khaitan Public School, Ghaziabad, where I’ve
+                    cultivated a
+                    deep curiosity about the world and honed my creative spirit. My academic path, enriched by a diverse
+                    array of experiences, has been a canvas for exploring unconventional ideas and questioning societal
+                    norms.
+                    From an early age, I have believed in thinking beyond the ordinary—a mindset that continues to define
+                    me
+                    as I shape my future.
+                </p>
+
+                <h3 class="text-2xl font-bold mb-4" style="background-color: #e6683c;">Professional Goals</h3>
+                <p>At the heart of my aspirations lies a resolute ambition: to redefine the video game industry by
+                    founding a
+                    multi-million-dollar enterprise. Through this venture, I aim to bridge the worlds of storytelling,
+                    innovation, and human imagination. My vision is to use video games as a powerful medium to convey
+                    unfiltered perspectives, provoke thought, and inspire change. I am driven by the dream of creating
+                    immersive experiences that not only entertain but also challenge the status quo, shaping how people
+                    perceive the world.</p>
+
+                <h3 class="text-2xl font-bold mb-4" style="background-color: #dc2743;">Unique Qualities</h3>
+                <p>What sets me apart is my relentless drive to think differently. Whether I’m analyzing real-world
+                    geopolitical scenarios, decoding the behind-the-scenes mechanics of a startup, or exploring the
+                    cultural
+                    essence of a language, I thrive on curiosity and creativity. I am not one to conform to preset
+                    norms;
+                    instead, I choose to explore the uncharted territories of ideas, making me a person who dares to
+                    challenge
+                    the ordinary and celebrate the extraordinary. </p>
+
+                <h3 class="text-2xl font-bold mb-4" style="background-color: #cc2366;">Values</h3>
+                <p>I hold authenticity, freedom of expression, and innovation as my guiding principles. I believe that
+                    every
+                    idea has the potential to shape the future if nurtured with passion and persistence. My work and
+                    actions
+                    are deeply rooted in a belief that the impossible is merely a challenge waiting to be conquered.
+                    “Everything is possible unless you think it isn’t”—this simple yet profound philosophy encapsulates
+                    my
+                    unwavering optimism and determination. </p>
+
+               <h3 class="text-2xl font-bold mb-4" style="background-color: #bc1888;">Current Focus</h3>
+                <p>Currently, my energy is divided between academic excellence and creative pursuits. I am exploring the
+                    intricate nuances of AI technologies, expanding my coding expertise, and delving deep into the art of
+                    video game development. Simultaneously, I am writing a historically inspired fictional book, aiming
+                    to
+                    capture the richness of the 1900s London era with authenticity and intrigue. This story, once
+                    completed,
+                    will form the basis of my first video game project—a bold step toward my ultimate vision.</p>
+
+                <h3 class="text-2xl font-bold mb-4">Personal Motivation</h3> 
+                <p>My motivation stems from the belief that innovation is the key to transforming lives. I am inspired
+                    by the
+                    idea of creating something that resonates with people on a personal level, evoking emotions and
+                    sparking
+                    conversations. Each step I take is fueled by the desire to leave a lasting impact, whether through a
+                    creative endeavor, a groundbreaking concept, or a meaningful connection. </p>
+
+                <h3 class="text-2xl font-bold mb-4">Inspiration &amp; Influences</h3>
+                <p>Throughout my journey, I have drawn inspiration from iconic figures who embody strength, innovation,
+                    and
+                    resilience. Ratan Tata’s wisdom and values, Rockefeller’s relentless ambition, and the
+                    revolutionary
+                    spirit of Bhagat Singh, Subhash Chandra Bose, and Che Guevara have profoundly shaped my worldview.
+                    Their
+                    legacies teach me the importance of balancing compassion with determination and the power of
+                    standing
+                    firm in one’s beliefs. </p>
+
+                <h3 class="text-2xl font-bold mb-4">Key Skills/Core Competencies</h3>
+                <p>Analytical Thinking: A natural talent for unraveling complex ideas and connecting the dots. Creative
+                    Problem-Solving: Finding innovative solutions where others see roadblocks. Leadership: Inspiring and
+                    guiding teams toward a common goal with confidence and clarity. Attention to Detail: Ensuring
+                    precision and
+                    excellence in every endeavor.</p>
+
+                <h3 class="text-2xl font-bold mb-4">Personal Philosophy</h3>
+                <p>“Way high you think to be, way high it is. Way low you think it is, way low you got to be. Life isn’t
+                    just a
+                    matter; it’s still in progress.” This quote, penned by me in a moment of introspection, serves as my
+                    compass, reminding me that our thoughts and perceptions ultimately shape our destinies.</p>
+
+
+                <h3 class="text-2xl font-bold mb-4">Life Outside Work</h3>
+                <p>When I’m not immersed in academics or creative pursuits, you’ll find me exploring my eclectic range of
+                    hobbies. From practicing airsoft shooting and playing golf to writing fictional stories grounded in
+                    real-world facts, my interests reflect my dynamic personality. I am also an avid collector, proudly
+                    curating an impressive collection of Hot Wheels cars, vintage coins, Nerf guns, perfumes, and
+                    sunglasses—each
+                    piece a testament to my passion for the extraordinary.</p>
+
+                <h3 class="text-2xl font-bold mb-4">Learning Style</h3>
+                <p>As a self-motivated learner, I thrive on hands-on experiences and deep dives into new subjects.
+                    Whether
+                    it’s mastering the intricacies of AI, understanding a new programming language, or unraveling the
+                    history
+                    of a cultural phenomenon, I immerse myself fully, combining self-study with practical application to
+                    ensure I grasp every detail.</p>
+
+                <h3 class="text-2xl font-bold mb-4">Future Vision</h3>
+                <p>In the next 5–10 years, I envision myself as the founder and creative force behind a groundbreaking
+                    video
+                    game company. This enterprise will not only push the boundaries of technology and art but also serve
+                    as
+                    a platform to share stories that inspire, challenge, and connect people worldwide. I see myself as a
+                    thought leader in the industry, spearheading innovation and redefining the way we interact with
+                    virtual
+                    worlds. </p>
+
+
+                <h3 class="text-2xl font-bold mb-4">Fun Facts</h3>
+                <p>Here’s a little trivia about me: I’ve amassed a collection of 180 Hot Wheels cars, over 200
+                    sunglasses, and
+                    50+ Nerf and airsoft guns. My passion for collecting stems from my love of uniqueness and detail,
+                    whether it’s a rare coin or an iconic game CD.</p>
+
+
+                <h3 class="text-2xl font-bold mb-4">Current Challenges</h3>
+                <p>While I pride myself on my versatility, time management remains an area of growth. Balancing my
+                    multifaceted interests with academic responsibilities is a challenge I’m tackling head-on, learning
+                    to
+                    prioritize and optimize my schedule without compromising creativity.</p>
+
+
+                <h3 class="text-2xl font-bold mb-4">Mentorship &amp; Collaboration</h3>
+                <p>I find immense value in teamwork and mentorship. While I often prefer working independently, I excel
+                    at
+                    fostering collaboration, inspiring others, and ensuring that collective efforts yield exceptional
+                    results. My ability to mentor peers and lead by example makes me a valuable contributor in any
+                    setting.
+                </p>
+
+                <h3 class="text-2xl font-bold mb-4">Personal Motto/Quote</h3>
+                <p>“Success is a blend of the angel and the devil within.” This philosophy, inspired by my admiration
+                    for
+                    great minds, reflects my belief in balancing empathy and ambition to achieve greatness. </p>
+            </div>
+        </section>
+
+
+        <section id="skills" class="py-16 bg-gradient-to-r from-purple-500 via-pink-500 to-red-500">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-8">Skills &amp; Expertise</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div style="background-color: #f09436;">
+                        <h3 class="text-2xl font-bold mb-4">Technical Skills</h3>
+                        <p>Programming &amp; Game Development: My expertise lies in Python programming and the basics
+                            of video
+                            game design. I am driven to transform innovative ideas into interactive and immersive
+                            digital
+                            experiences, with an eye on blending creative storytelling with cutting-edge technology.
+                            Artificial Intelligence Exploration: I delve deeply into AI technologies, experimenting
+                            with
+                            tools to understand their real-world applications, from video editing to automating tasks
+                            that
+                            enhance efficiency.
+                            Video Editing &amp; Content Creation: A storyteller at heart, I craft engaging visual
+                            narratives
+                            using
+                            video editing software. From trailers to documentaries, I channel creativity into every
+                            frame,
+                            ensuring each project resonates with its audience.
+                            Geopolitical Analysis: My fascination with global politics sharpens my analytical and
+                            critical
+                            thinking skills, helping me understand the intricate relationships between technology,
+                            culture,
+                            and power.
+                            Creative Writing &amp; Storytelling: With a knack for weaving facts into fiction, I create
+                            compelling
+                            stories inspired by historical events, aiming to blend entertainment with education.
+                            Digital Literacy: I stay updated on the latest in tech, ensuring that my skills remain
+                            relevant in
+                            a rapidly evolving digital landscape.</p>
+                    </div>
+                    <div style="background-color: #e6683c;">
+                        <h3 class="text-2xl font-bold mb-4">Soft Skills</h3>
+                        <p>Leadership: Years of organizing events, participating in leadership camps, and
+                            coordinating
+                            groups have instilled in me the ability to lead with confidence and inspire others to bring
+                            their
+                            best to the table.
+                            Innovative Thinking: I excel at generating fresh ideas, whether it’s for solving problems,
+                            designing projects, or creating captivating stories. My ability to think outside
+                            conventional
+                            boundaries sets me apart.
+                            Communication: Strong verbal and written communication skills enable me to articulate
+                            complex
+                            ideas clearly and persuasively, making me effective in discussions, debates, and
+                            presentations.
+                            Adaptability: My ability to balance diverse interests—academic pursuits, creative hobbies,
+                            and
+                            leadership roles—demonstrates my flexibility and willingness to embrace change.
+                            Emotional Intelligence: I connect with people on a deeper level, fostering trust and
+                            understanding
+                            in both professional and personal relationships.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="strength-weaknesses" class="py-16 bg-gray-700 text-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-8">Strengths &amp; Weaknesses</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div style="background-color: #dc2743;">
+                        <h3 class="text-2xl font-bold mb-4">Strengths</h3>
+                        <ul>
+                            <li>
+                                <h4 class="text-xl font-semibold">Research-Driven Approach:</h4>
+                                <p>My inquisitive nature fuels my passion for digging deep into topics, whether it’s
+                                    understanding the history of a video game franchise or analyzing global political
+                                    shifts.
+                                    My
+                                    MUN awards and certificates highlight this skill.</p>
+                            </li>
+                            <li>
+                                <h4 class="text-xl font-semibold">Creativity in Abundance:</h4>
+                                <p>From writing fictional narratives based on real-world events to collecting and
+                                    curating
+                                    unique items, my creativity knows no bounds.</p>
+                            </li>
+                            <li>
+                                <h4 class="text-xl font-semibold">Attention to Detail:</h4>
+                                <p>Be it coding, crafting a story, or managing a project, I ensure precision in every
+                                    aspect,
+                                    which
+                                    translates into high-quality outputs.</p>
+                            </li>
+                            <li>
+                                <h4 class="text-xl font-semibold">Optimism &amp; Resilience:</h4>
+                                <p>My belief that "everything is possible" drives me to tackle challenges head-on and
+                                    learn
+                                    from
+                                    failures. It fuels my ambition to achieve greatness. </p>
+                            </li>
+                            <li>
+                                <h4 class="text-xl font-semibold">Versatile Learning Ability:</h4>
+                                <p>I continuously push boundaries by acquiring new skills, from learning languages like
+                                    French,
+                                    Spanish, and Italian to diving into technical domains like information security and
+                                    AI.
+                                </p>
+                            </li>
+                            <li>
+                                <h4 class="text-xl font-semibold">Visionary Thinking:</h4>
+                                <p>With a goal of establishing a multi-million-dollar video game company, I channel my
+                                    ambitions
+                                    into actionable steps, balancing creativity with business acumen.</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div style="background-color: #cc2366;">
+                        <h3 class="text-2xl font-bold mb-4">Weaknesses</h3>
+                        <ul>
+                            <li>
+                                <h4 class="text-xl font-semibold">Time Management:</h4>
+                                <p>Balancing my diverse passions has been a challenge, but I’m adopting tools and
+                                    techniques
+                                    to
+                                    optimize my schedule.</p>
+                            </li>
+                            <li>
+                                <h4 class="text-xl font-semibold">Independence Preference:</h4>
+                                <p>While I excel in solo work, I recognize the importance of collaboration and am
+                                    working
+                                    on
+                                    fostering a more team-oriented mindset.</p>
+                            </li>
+                            <li>
+                                <h4 class="text-xl font-semibold">Impatience at Times:</h4>
+                                <p>My enthusiasm to see quick results can sometimes lead to frustration. I am actively
+                                    learning
+                                    to pace myself and focus on the journey. </p>
+                            </li>
+                            <li>
+                                <h4 class="text-xl font-semibold">Trust Issues:</h4>
+                                <p>While I am cautious in trusting others, I view this as a way to develop stronger
+                                    discernment
+                                    and emotional intelligence. </p>
+                            </li>
+                            <li>
+                                <h4 class="text-xl font-semibold">Name Recall:</h4>
+                                <p>I have an exceptional memory for faces but sometimes struggle with recalling names, a
+                                    quirk I
+                                    embrace as part of my individuality. </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="interests-hobbies" class="py-16" style="background-color: #bc1888;">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-8">Interests &amp; Hobbies</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Sports &amp; Competitive Activities</h3>
+                        <p>I am passionate about shooting sports (airsoft and professional shooting), golf, and air
+                            hockey.
+                            These activities not only keep me physically active but also sharpen my focus and strategic
+                            thinking.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Storytelling</h3>
+                        <p>Writing fictional stories based on historical facts is my way of merging creativity with
+                            authenticity.
+                            My ongoing project, a narrative set in 1900s London, exemplifies this passion.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Cultural Exploration</h3>
+                        <p> I have a deep love for learning about diverse cultures, languages, and traditions,
+                            allowing
+                            me
+                            to
+                            connect with people from various backgrounds. My proficiency in French, along with basic
+                            knowledge
+                            of Spanish, Italian, Dutch, and Polish, reflects this interest. </p>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Collecting Unique Items</h3>
+                        <p>My extensive collections—180 Hot Wheels cars, 50+ Nerf guns, 2500 coins (including vintage
+                            and
+                            international), 100+ bobbleheads, and 150+ perfumes—highlight my penchant for
+                            uniqueness.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Tech Enthusiasm</h3>
+                        <p>From experimenting with AI tools to coding projects, I am constantly exploring the
+                            intersection
+                            of
+                            technology and creativity.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Entertainment</h3>
+                        <p>Watching web series (Squid Game, Narcos, Money Heist, The Mandalorian) and movies (Star
+                            Wars,
+                            Marvel,
+                            Mission Impossible) inspires me, fueling my creativity for storytelling and game design.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Gaming</h3>
+                        <p>As a devoted gamer, I explore the storytelling and mechanics of games like GTA, Assassin’s
+                            Creed,
+                            and
+                            Spider-Man, learning from their innovative approaches to design and player engagement.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Learning &amp; Self-Improvement</h3>
+                        <p>I dedicate time to acquiring new skills and insights, ranging from mastering AI tools to
+                            understanding the backstage dynamics of industries like startups and video games.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="education" class="py-16 bg-gray-900 text-white" style="background-color: #f09436;">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-8">Education</h2>
+                <div class="bg-gray-800 p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4">My Academic Journey</h3>
+                    <p>My academic journey has been a blend of curiosity, exploration, and ambition. Currently, I am in
+                        the
+                        midst
+                        of my 12th grade at Khaitan Public School, Ghaziabad, where I am not only focused on academics
+                        but
+                        also
+                        working towards my goal of laying a solid foundation for the diverse pursuits that excite me.
+                    </p>
+
+                    <p>While my school provides me with a strong academic framework, my passion for learning beyond
+                        textbooks is
+                        what truly drives me. I’ve always believed that true education extends beyond the confines of
+                        the
+                        classroom,
+                        which is why I constantly seek new knowledge in fields ranging from technology and game
+                        development
+                        to
+                        history and geopolitics. This self-driven curiosity fuels my determination to push boundaries
+                        and
+                        embrace
+                        opportunities for growth in every form.
+                    </p>
+                    <h3 class="text-xl font-semibold mb-4">Some Highlights:</h3>
+                    <p>CBSE 10th Grade: Successfully completed my 10th-grade CBSE Board exams from Khaitan Public
+                        School,
+                        where I focused on core subjects and developed a keen interest in subjects like computer
+                        science and
+                        English. My love for languages, including English and French, has always been a major part of
+                        my
+                        academic experience.</p>
+
+
+                    <p>Extracurricular Involvement: Beyond the classroom, I have consistently engaged in
+                        extracurricular
+                        activities. One of my most notable achievements is receiving the Certificate of Merit for
+                        Verbal
+                        Mention
+                        in the Model United Nations conference on the topic of Artificial Intelligence, where I had the
+                        privilege of representing the state of France in 2024. This experience not only enhanced my
+                        public
+                        speaking and debate skills but also deepened my interest in global issues and diplomacy.</p>
+
+
+                    <p>Workshops &amp; Certifications: I have completed several specialized certifications and
+                        workshops,
+                        including:</p>
+                    <ul class="list-disc ml-6">
+                        <li>Python Summer Bootcamp by Move Forward (2020)</li>
+                        <li>Introduction to Information Security (2021)</li>
+                        <li>Summer Design Programme by Ecole Intuit Lab (2022)</li>
+                        <li>Technolothon 2021 and Virtual Fitness Sports Fiesta for sharpening my organizational and
+                            leadership skills. </li>
+                    </ul>
+
+                    <p>In addition to these formal and informal educational pursuits, my passion for game development
+                        serves
+                        as
+                        the
+                        cornerstone of my ambitions. I aim to pursue a degree in Game Design and Development, which will
+                        allow me to combine my skills and knowledge into creating innovative, meaningful games that
+                        reflect
+                        both my passion for technology and my personal beliefs.
+                    </p>
+
+
+                    <p>For me, education is not just about acquiring knowledge—it’s about applying that knowledge to
+                        make a
+                        real-world impact, continuously challenging myself to grow, evolve, and innovate. I’m excited
+                        for
+                        what
+                        lies ahead as I continue to explore my potential and prepare for the future I’m building.</p>
+
+                </div>
+            </div>
+        </section>
+
+
+        <section id="achievements" class="py-16 bg-gray-900 text-white" style="background-color: #e6683c;">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-8">Achievements</h2>
+                <div class="bg-gray-800 p-6 rounded-lg">
+                    <h3 class="text-2xl font-bold mb-4">Model United Nations</h3>
+                    <p>
+                        - Certificate of Merit - Verbal Mention in a Model United Nations Conference (2024), representing
+                        France on the topic of Artificial Intelligence.
+                        <br>
+                        - Certificate of Participation in a Model United Nations Conference representing Cipla on the
+                        topic of the Pharmaceutical Industry.
+                    </p>
+
+                    <h3 class="text-2xl font-bold mb-4">Academic Certifications &amp; Courses</h3>
+                    <p>
+                        - Certificate of Completion in Python Summer Bootcamp by Move Forward (2020).
+                        <br>
+                        - Certificate of Completion for Introduction to Information Security (2021).
+                        <br>
+                        - Certificate of Participation in the Summer Design Programme by Ecole Intuit Lab (2022).
+                    </p>
+
+                    <h3 class="text-2xl font-bold mb-4">Other Achievements</h3>
+                    <p>
+                        - Certificate of Participation in the BRICS Math Olympiad.
+                        <br>
+                        - Certificate of Excellence in English Speech and Drama Programme by Helen O'Grady International
+                        (2013-2016).
+                        <br>
+                        - Certificate of Participation in the Punjab Kesari's Kesari Little Star competition.
+                        <br>
+                        - Certificate of Appreciation in Leadership Camp, highlighting leadership potential and teamwork
+                        skills.
+                        <br>
+                        - Certificate of Participation in Technolothon (2021), showcasing technical and problem-solving
+                        skills.
+                        <br>
+                        - Certificate of Appreciation in Virtual Fitness Sports Fiesta.
+                        <br>
+                        - Certificate of Merit for 1st place in Song Competition, showcasing musical talent.
+                        <br>
+                        - Certificate of Merit for 1st place in an English Rhyme Recitation Competition.
+                        <br>
+                        - Certificate of Merit for 1st place in a Storytelling Competition.
+                        <br>
+                        - Certificate of Merit for 2nd place in a Chef Competition.
+                        <br>
+                        - Certificate of Merit for 3rd place in an English Storytelling Competition.
+                        <br>
+                        - Certificate of Merit for 3rd place in a Jewelry Making Competition.
+                        <br>
+                        - Certificate of Merit for 3rd place in Kahani Vachan Competition (2014), and 1st place in 2013.
+                        <br>
+                        - Certificate of Participation in Science Olympiad Foundation events.
+                        <br>
+                        - Certificate of Participation in SOF IMO and SOF NSO (2021-2022).
+                        <br>
+                        - Certificate of Appreciation in Drawing Competition by Schoolsindia Services Pvt Ltd.
+                        <br>
+                        - Certificate of Appreciation in Aero Modeling Club.
+                        <br>
+                        - Certificate of Appreciation for being caring and helpful in social settings.
+                        <br>
+                        - Certificate of Merit for 3rd place in Hindi Rhyme Competition.
+                        <br>
+                        - Certificate of Completion in the Run for Unity 2km Marathon (2023).
+                        <br>
+                        - Certificate of Appreciation in No. 1 Dramebaaz (2015).
+                        <br>
+                        - Certificate of Participation and Appreciation for participating and cooperating in Nagar
+                        Kirtan by the Jamnapar Guru Nanak Sikh Society, Delhi.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="blogs" class="py-16 bg-gray-700 text-white" style="background-color: #dc2743;">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-8">Blogs</h2>
+                <p>Work-in-Progress</p>
+            </div>
+        </section>
+
+        <section id="projects" class="py-16 bg-gray-900 text-white" style="background-color: #cc2366;">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-8">Projects</h2>
+                <p>Work-in-Progress</p>
+            </div>
+        </section>
+
+
+        <section id="contact" class="py-16 bg-gray-800 text-white" style="background-color: #bc1888;">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-8">Contact Information</h2>
+                <div class="text-center">
+                    <p>mail id: 4d1t7a.is.cool@gmail.com</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        ScrollReveal().reveal('.scroll-animated', {
+            delay: 200,
+            distance: '50px',
+            origin: 'bottom',
+            reset: true
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Scroll animations
+            gsap.from('#about h2', {
+                scrollTrigger: {
+                    trigger: '#about',
+                    start: 'top 80%',
+                    end: 'bottom 20%',
+                    toggleActions: 'play none none reverse'
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1
+            });
+
+        });
+    </script>
+
+</body>
+
+</html>
